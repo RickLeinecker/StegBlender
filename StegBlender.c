@@ -96,10 +96,10 @@ int getModOperationValue(unsigned char *data, int groupSize, int modNumber)
 int countTotal(unsigned char *data, int groupSize)
 {
 	/* Start with zero. */
-	int total = 0;
+	int total = 0, i;
 
 	/* Go through the image data in the group. */
-	for (int i = 0; i < groupSize; i++)
+	for (i = 0; i < groupSize; i++)
 	{
 		/* Update the total. */
 		total += (int)data[i];
@@ -387,7 +387,7 @@ void doEmbed(int argc, char *argv[])
 void doExtract(int argc, char *argv[])
 {
 	unsigned char *messageData, *rgbData;
-	int rgbSize, messageSize;
+	int rgbSize, messageSize, i;
 	BITMAPFILEHEADER bfh;
 	BITMAPINFOHEADER bih;
 
@@ -404,7 +404,7 @@ void doExtract(int argc, char *argv[])
 	messageData = extractMessage(rgbData, NUMSIZEDIGITS, GROUPSIZE, MODNUMBER, &messageSize);
 
 	/* Here we may have more than the minimum command line arguments. */
-	for (int i = 0; i < 2; i++)
+	for (i = 0; i < 2; i++)
 	{
 		if (argc > 3 + i)
 		{
@@ -431,14 +431,14 @@ void doExtract(int argc, char *argv[])
 */
 unsigned char *extractMessage(unsigned char *rgbData, int numSizeDigits, int groupSize, int modNumber, int *messageSize)
 {
-	int total;
+	int total, i;
 	unsigned char *ret;
 
 	/* Start by setting messageSize to zero. */
 	*messageSize = 0;
 
 	/* Loop through the prefix digits. */
-	for (int i = 0; i < numSizeDigits; i++)
+	for (i = 0; i < numSizeDigits; i++)
 	{
 		/* Get the total for this group of image data bytes. */
 		total = countTotal(rgbData, groupSize);
@@ -456,7 +456,7 @@ unsigned char *extractMessage(unsigned char *rgbData, int numSizeDigits, int gro
 
 	ret = (unsigned char *)malloc((*messageSize) + 1);
 
-	for (int i = 0; i < (*messageSize); i++)
+	for (i = 0; i < (*messageSize); i++)
 	{
 		/* Get the total for this group of image data bytes. */
 		total = countTotal(rgbData, groupSize);
@@ -484,9 +484,10 @@ unsigned char *extractMessage(unsigned char *rgbData, int numSizeDigits, int gro
 */
 void embedMessage(unsigned char *rgbData, unsigned char *message, int messageLength, int groupSize, int modNumber)
 {
-
+	int i;
+	
 	/* Loop through the bytes in the message. */
-	for (int i = 0; i < messageLength; i++)
+	for (i = 0; i < messageLength; i++)
 	{
 		/* Call the function that adjusts the carrier bytes in this group. */
 		adjustGroup(rgbData, groupSize, modNumber, (int)message[i]);
