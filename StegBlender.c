@@ -50,9 +50,9 @@ int main(int argc, char *argv[])
 */
 void usage(void)
 {
-	printf("Blender usage:\n");
-	printf("Blender embed BMPLoadFileName BMPSaveFileName MessageLoadFileName");
-	printf("Blender extract BMPLoadFileName [MessageSaveFileName] [display]");
+	printf("StegBlender usage:\n");
+	printf("StegBlender embed BMPLoadFileName BMPSaveFileName MessageLoadFileName\n");
+	printf("StegBlender extract BMPLoadFileName [MessageSaveFileName] [display]\n");
 	exit(1);
 }
 
@@ -485,7 +485,7 @@ unsigned char *extractMessage(unsigned char *rgbData, int numSizeDigits, int gro
 void embedMessage(unsigned char *rgbData, unsigned char *message, int messageLength, int groupSize, int modNumber)
 {
 	int i;
-	
+
 	/* Loop through the bytes in the message. */
 	for (i = 0; i < messageLength; i++)
 	{
